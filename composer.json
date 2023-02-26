@@ -1,0 +1,79 @@
+{
+    "name" : "fr3nch13/cakephp-excel",
+    "description" : "CakePHP Plugin: Parses, reads, and writes Excel, CSV, and PDF files.",
+    "type" : "cakephp-plugin",
+    "keywords" : ["cakephp", "plugin", "php", "excel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Brian French",
+            "email": "fr3nch13@gmail.com",
+            "homepage": "https://github.com/fr3nch13"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/fr3nch13/ComposerLockParser.git"
+        }
+    ],
+    "require": {
+        "cakephp/cakephp": "~4.4.8",
+        "mpdf/mpdf": "~8.1",
+        "phpoffice/phpspreadsheet": "1.*",
+        "tecnickcom/tcpdf": "^6.2",
+        "fr3nch13/cakephp-utilities":"~0.0"
+    },
+    "require-dev": {
+        "fr3nch13/cakephp-pta": "dev-2.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fr3nch13\\Excel\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\": "./vendor/fr3nch13/cakephp-pta/tests/test_app/src",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
+            "PtaApp\\": "vendor/fr3nch13/cakephp-pta/tests/test_app/src",
+            "Fr3nch13\\Excel\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "pre-commit": [
+            "@ci"
+        ],
+        "ci": [
+            "@check",
+            "@coverage-text"
+        ],
+        "check": [
+            "@test",
+            "@cs-check",
+            "@phpstan"
+        ],
+        "fix": [
+            "@cs-fix",
+            "@cs-check"
+        ],
+        "cs-check": "php -d memory_limit=-1 ./vendor/bin/phpcs --colors -p -s --extensions=php ./src ./tests",
+        "cs-checkstyle": "php -d memory_limit=-1 ./vendor/bin/phpcs --report=checkstyle --extensions=php ./src ./tests",
+        "cs-fix": "php -d memory_limit=-1 ./vendor/bin/phpcbf --colors --extensions=php ./src ./tests",
+        "phpstan": "php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress -vvv --xdebug",
+        "phpstan-github": "php -d memory_limit=-1 ./vendor/bin/phpstan --no-progress -vvv --error-format=github",
+        "test": "php -d memory_limit=-1 ./vendor/bin/phpunit --colors=always",
+        "coverage": "php -d memory_limit=-1 -d xdebug.mode=coverage ./vendor/bin/phpunit --log-junit tmp/coverage/unitreport.xml --coverage-html tmp/coverage",
+        "coverage-clover": "php -d memory_limit=-1 -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-clover=tmp/coverage.xml",
+        "coverage-text": "php -d memory_limit=-1 -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-text --colors=never"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "cakephp/plugin-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}
