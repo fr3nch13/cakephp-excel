@@ -1,0 +1,18 @@
+/vendor/*
+!/vendor/empty
+!*.gitkeep
+*default.lock
+/tests/.env
+/tests/Fixture/*Bak.php
+.phpunit.result.cache
+.composer-update
+/tmp/
+
+# For the CI building to cut down on downloading traffic #
+/.composercache/*
+!/.composercache/empty
+
+# Allow builds on multiple php versions
+/composer.lock
+
+/.vscode

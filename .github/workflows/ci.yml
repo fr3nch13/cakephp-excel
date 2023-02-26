@@ -1,0 +1,135 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches:
+      - '*'
+
+permissions:
+  contents: read
+
+jobs:
+  coding-standard:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2', 'latest']
+    name: Coding Standard - PHP - ${{ matrix.php-version }}
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, intl
+        coverage: none
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Composer install
+      run: |
+        composer config github-oauth.github.com ${{ secrets.ACTIONS_TOKEN }}
+        composer install
+
+    - name: Run PHP CodeSniffer
+      run: composer run-script cs-checkstyle | vendor/bin/cs2pr
+
+  static-analysis:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2', 'latest']
+    name: Static Analysis - PHP -  ${{ matrix.php-version }}
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, intl
+        coverage: xdebug
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Composer install
+      run: |
+        composer config github-oauth.github.com ${{ secrets.ACTIONS_TOKEN }}
+        composer install
+
+    - name: Run PHP Analyzer
+      run: composer run-script phpstan
+
+  test:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2', 'latest']
+    name: Test - PHP - ${{ matrix.php-version }}
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, intl
+        coverage: none
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Composer install
+      run: |
+        composer config github-oauth.github.com ${{ secrets.ACTIONS_TOKEN }}
+        composer install
+
+    - name: Run PHPUnit
+      run: composer run-script test
+
+  coverage-php:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['7.4', '8.0', '8.1', '8.2', 'latest']
+    name: Coverage - PHP - ${{ matrix.php-version }}
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v3
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+        extensions: mbstring, intl
+        coverage: pcov
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Composer install
+      run: |
+        composer config github-oauth.github.com ${{ secrets.ACTIONS_TOKEN }}
+        composer install
+
+    - name: Run PHPUnit
+      run:  composer run-script coverage-clover
+
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./tmp/coverage.xml
+        verbose: true
