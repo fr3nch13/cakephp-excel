@@ -157,7 +157,7 @@ class Excel
                 $this->getSpreadsheet()->setActiveSheetIndex($sheetIndex);
             }
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
-            $msg = __('Error when loading excel file: `{0}`. File: `{1}`', [
+            $msg = __('Error when loading excel file: Error: `{0}`. File: `{1}`', [
                 $e->getMessage(),
                 $this->getFilePath(),
             ]);

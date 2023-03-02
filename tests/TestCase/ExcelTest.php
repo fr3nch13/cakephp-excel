@@ -307,7 +307,7 @@ class ExcelTest extends TestCase
     {
         $this->expectException(ExcelException::class);
         $this->expectExceptionCode(500);
-        $this->expectExceptionMessage('Error when loading excel file: File "" does not exist.');
+        $this->expectExceptionMessage('Error when loading excel file: Error: `File "" does not exist.`. File: ``');
         $excel = new Excel();
         $excel->save();
     }
@@ -708,7 +708,7 @@ class ExcelTest extends TestCase
     {
         $this->expectException(ExcelException::class);
         $this->expectExceptionCode(500);
-        $this->expectExceptionMessage('Error when loading excel file: File "" does not exist.');
+        $this->expectExceptionMessage('Error when loading excel file: Error: `File "" does not exist.`. File: ``');
         $excel = new Excel();
         $excel->getSheetNames();
     }
@@ -735,7 +735,7 @@ class ExcelTest extends TestCase
     {
         $this->expectException(ExcelException::class);
         $this->expectExceptionCode(500);
-        $this->expectExceptionMessage('Error when loading excel file: File "" does not exist.');
+        $this->expectExceptionMessage('Error when loading excel file: Error: `File "" does not exist.`. File: ``');
         $excel = new Excel();
         $excel->getReader();
     }
