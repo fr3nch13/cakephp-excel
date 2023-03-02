@@ -30,6 +30,7 @@ class Plugin extends BasePlugin
         if (!Configure::read('Excel')) {
             Configure::write('Excel', [
                 'test' => 'TEST',
+                'modifiedBy' => 'Fr3nch13',
             ]);
         }
     }

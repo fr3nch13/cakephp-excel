@@ -42,7 +42,7 @@ class ExcelHelper extends \Cake\View\Helper
     /**
      * Wrapper for the \Fr3nch13\Excel\Excel::create() method.
      *
-     * @param array<string, string> $properties The properties for the excel object/file.
+     * @param array<string, mixed> $properties The properties for the excel object/file.
      * @param array<string, string> $headers The first line of the excel file, also defines the column mapping.
      * @param array<int, mixed> $rows The rest of the rows.
      * @return \Fr3nch13\Excel\Excel The created excel object With the supplied data.
