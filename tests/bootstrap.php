@@ -14,13 +14,6 @@ use Cake\Core\Configure;
 // Configure your stuff here for the plugin_bootstrap.php below.
 define('TESTS', __DIR__ . DS);
 
-$dotenv = new \Symfony\Component\Dotenv\Dotenv();
-if (is_file(TESTS . '.env')) {
-    $dotenv->load(TESTS . '.env');
-} elseif (is_file(TESTS . '.env.test')) {
-    $dotenv->load(TESTS . '.env.test');
-}
-
 Configure::write('Tests.Plugins', [
     'Fr3nch13/Excel',
 ]);
