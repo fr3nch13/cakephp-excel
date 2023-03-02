@@ -693,7 +693,7 @@ class ExcelTest extends TestCase
     public function testMemory(): void
     {
         $excel = new Excel();
-        $this->assertGreaterThan(100, $excel->memoryUsage());
+        $this->assertGreaterThan(100, $excel->memoryUsage(false));
         $this->assertSame('1 KB', $excel->memoryUsage(true, 1024));
         $this->assertSame('1 MB', $excel->memoryUsage(true, 1024 * 1024));
         $this->assertSame('1 GB', $excel->memoryUsage(true, 1024 * 1024 * 1024));
