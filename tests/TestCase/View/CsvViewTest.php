@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Fr3nch13\Excel\Test\TestCase\View\Helper;
 
-use Cake\Core\App;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
 use Fr3nch13\Excel\View\CsvView;
