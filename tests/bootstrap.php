@@ -19,7 +19,7 @@ Configure::write('Tests.Plugins', [
 ]);
 
 Configure::write('Tests.Helpers', [
-    'Excel' => ['className' => 'Fr3nch13/Excel.Excel'],
+    'Excel' => ['className' => \Fr3nch13\Excel\View\Helper\ExcelHelper::class],
 ]);
 
 ////// Ensure we can setup an environment for the Test Application instance.

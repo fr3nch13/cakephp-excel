@@ -22,7 +22,23 @@ class ExcelBaseView extends \App\View\AppView
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadHelper('Excel', ['className' => 'Fr3nch13/Excel.Excel']);
+        $this->loadHelper('Excel', [
+            'className' => \Fr3nch13\Excel\View\Helper\ExcelHelper::class,
+        ]);
         $this->setLayout('Fr3nch13/Excel.default');
+    }
+
+    /**
+     * Used to test actual layout paths being used.
+     * This shouldn't be used in production.
+     *
+     * @return array<string, string> The list of file names to be used.
+     */
+    public function getFileNames(): array
+    {
+        return [
+            'layout' => $this->_getLayoutFileName(),
+            'template' => $this->_getTemplateFileName(),
+        ];
     }
 }
