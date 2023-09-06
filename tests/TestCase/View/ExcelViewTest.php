@@ -2,24 +2,24 @@
 declare(strict_types=1);
 
 /**
- * ExcelBaseViewTest
+ * ExcelViewTest
  */
 
 namespace Fr3nch13\Excel\Test\TestCase\View\Helper;
 
 use Cake\Http\ServerRequest;
 use Cake\Routing\Router;
-use Fr3nch13\Excel\View\ExcelBaseView;
+use Fr3nch13\Excel\View\ExcelView;
 
 /**
- * ExcelBaseView Test Class
+ * ExcelView Test Class
  *
- * This class contains the main tests for the ExcelBaseView Class.
+ * This class contains the main tests for the ExcelView Class.
  */
-class ExcelBaseViewTest extends \Cake\TestSuite\TestCase
+class ExcelViewTest extends \Cake\TestSuite\TestCase
 {
     /**
-     * @var \Fr3nch13\Excel\View\ExcelBaseView
+     * @var \Fr3nch13\Excel\View\ExcelView
      */
     public $View;
 
@@ -27,19 +27,17 @@ class ExcelBaseViewTest extends \Cake\TestSuite\TestCase
      * Setup the application so that we can run the tests.
      *
      * The setup involves initializing a new CakePHP view and using that to
-     * get a copy of the ExcelBaseView.
+     * get a copy of the ExcelView.
      */
     public function setUp(): void
     {
         parent::setUp();
 
         Router::reload();
-        $request = new ServerRequest([
-            'url' => '/pages/home',
-        ]);
+        $request = new ServerRequest();
         Router::setRequest($request);
 
-        $this->View = new ExcelBaseView($request);
+        $this->View = new ExcelView($request);
 
         static::setAppNamespace();
         $this->loadPlugins(['Fr3nch13/Excel' => []]);
@@ -66,20 +64,20 @@ class ExcelBaseViewTest extends \Cake\TestSuite\TestCase
     public function testContentType(): void
     {
         $this->assertSame(
-            'text/html',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             $this->View->getResponse()->getType()
         );
     }
 
     /**
-     * Test The Layour file.
+     * Test The Layout file.
      *
      * @return void
      */
     public function testLayout(): void
     {
         $this->assertSame(
-            'Fr3nch13/Excel.default',
+            'Fr3nch13/Excel.xlsx/default',
             $this->View->getLayout()
         );
     }
@@ -96,9 +94,9 @@ class ExcelBaseViewTest extends \Cake\TestSuite\TestCase
 
         $filenames = $this->View->getFileNames();
 
-        // These should be using the App's layout and template.
+        // should use our layout and the app's template.
         $this->assertSame(
-            '/vendor/fr3nch13/cakephp-pta/tests/test_app/templates/layout/default.php',
+            '/templates/layout/xlsx/default.php',
             str_replace(PLUGIN_ROOT, '', $filenames['layout'])
         );
         $this->assertSame(
