@@ -22,6 +22,7 @@ class PdfView extends ExcelBaseView
         parent::initialize();
 
         $this->setLayout('Fr3nch13/Excel.pdf/default');
+        $this->setSubDir('pdf');
 
         $this->getResponse()->setTypeMap('pdf', ['application/pdf']);
         $this->setResponse($this->getResponse()->withType('pdf'));
