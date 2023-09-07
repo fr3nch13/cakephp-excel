@@ -2,18 +2,28 @@
 declare(strict_types=1);
 
 /**
- * ExcelView
+ * ExcelBaseView
  */
 
 namespace Fr3nch13\Excel\View;
 
 /**
- * Excel View
+ * Excel Base View
  *
  * @property \Fr3nch13\Excel\View\Helper\ExcelHelper $Excel
  */
 class ExcelBaseView extends \App\View\AppView
 {
+    /**
+     * @var string The path to look for the layout.
+     */
+    protected $layoutPath = '';
+
+    /**
+     * @var string The sub directory to look for the template.
+     */
+    protected $subDir = '';
+
     /**
      * Initialize method
      *
@@ -25,7 +35,6 @@ class ExcelBaseView extends \App\View\AppView
         $this->loadHelper('Excel', [
             'className' => \Fr3nch13\Excel\View\Helper\ExcelHelper::class,
         ]);
-        $this->setLayout('Fr3nch13/Excel.default');
     }
 
     /**

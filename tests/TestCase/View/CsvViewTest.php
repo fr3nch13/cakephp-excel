@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Fr3nch13\Excel\Test\TestCase\View\Helper;
 
-use Cake\Http\ServerRequest;
-use Cake\Routing\Router;
 use Fr3nch13\Excel\View\CsvView;
 
 /**
@@ -24,27 +22,26 @@ class CsvViewTest extends \Cake\TestSuite\TestCase
     public $View;
 
     /**
-     * Setup the application so that we can run the tests.
-     *
-     * The setup involves initializing a new CakePHP view and using that to
-     * get a copy of the CsvView.
+     * Setup the View so that we can run the tests.
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        Router::reload();
-        $request = new ServerRequest();
-        Router::setRequest($request);
-
-        $this->View = new CsvView($request);
-
-        static::setAppNamespace();
         $this->loadPlugins(['Fr3nch13/Excel' => []]);
+
+        $viewOptions = [
+            'plugin' => 'Fr3nch13/Excel',
+            'name' => 'Tests',
+            'templatePath' => 'Tests',
+            'template' => 'index',
+        ];
+
+        $this->View = new CsvView(null, null, null, $viewOptions);
     }
 
     /**
-     * Test that the help is loaded.
+     * Test that the helper is loaded.
      *
      * @return void
      */
@@ -70,14 +67,14 @@ class CsvViewTest extends \Cake\TestSuite\TestCase
     }
 
     /**
-     * Test The Layout file.
+     * Test The layout.
      *
      * @return void
      */
     public function testLayout(): void
     {
         $this->assertSame(
-            'Fr3nch13/Excel.csv/default',
+            'default',
             $this->View->getLayout()
         );
     }
@@ -89,9 +86,6 @@ class CsvViewTest extends \Cake\TestSuite\TestCase
      */
     public function testFileNames(): void
     {
-        $this->View->setTemplate('Fr3nch13/Excel.test');
-        $this->View->render();
-
         $filenames = $this->View->getFileNames();
 
         // should use our layout and the app's template.
@@ -103,7 +97,7 @@ class CsvViewTest extends \Cake\TestSuite\TestCase
         // since there are no routes, the Request can't route to a controller.
         // here, we're ensuring the subdir is set.
         $this->assertSame(
-            '/templates/csv/test.php',
+            '/templates/Tests/csv/index.php',
             str_replace(PLUGIN_ROOT, '', $filenames['template'])
         );
     }
