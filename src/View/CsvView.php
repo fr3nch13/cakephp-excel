@@ -22,6 +22,7 @@ class CsvView extends ExcelBaseView
         parent::initialize();
 
         $this->setLayout('Fr3nch13/Excel.csv/default');
+        $this->setSubDir('csv');
 
         $this->getResponse()->setTypeMap('csv', ['text/csv; charset=UTF-8']);
         $this->setResponse($this->getResponse()->withType('csv'));

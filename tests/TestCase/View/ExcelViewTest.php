@@ -89,7 +89,7 @@ class ExcelViewTest extends \Cake\TestSuite\TestCase
      */
     public function testFileNames(): void
     {
-        $this->View->setTemplate('base');
+        $this->View->setTemplate('Fr3nch13/Excel.test');
         $this->View->render();
 
         $filenames = $this->View->getFileNames();
@@ -99,8 +99,11 @@ class ExcelViewTest extends \Cake\TestSuite\TestCase
             '/templates/layout/xlsx/default.php',
             str_replace(PLUGIN_ROOT, '', $filenames['layout'])
         );
+
+        // since there are no routes, the Request can't route to a controller.
+        // here, we're ensuring the subdir is set.
         $this->assertSame(
-            '/vendor/fr3nch13/cakephp-pta/tests/test_app/templates/base.php',
+            '/templates/xlsx/test.php',
             str_replace(PLUGIN_ROOT, '', $filenames['template'])
         );
     }

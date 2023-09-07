@@ -22,6 +22,7 @@ class ExcelView extends ExcelBaseView
         parent::initialize();
 
         $this->setLayout('Fr3nch13/Excel.xlsx/default');
+        $this->setSubDir('xlsx');
 
         $this->getResponse()->setTypeMap('xlsx', ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']);
         $this->setResponse($this->getResponse()->withType('xlsx'));
