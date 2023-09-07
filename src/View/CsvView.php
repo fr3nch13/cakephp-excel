@@ -29,7 +29,7 @@ class CsvView extends ExcelBaseView
      */
     public static function contentType(): string
     {
-        return 'text/csv; charset=UTF-8';
+        return 'text/csv';
     }
 
     /**
@@ -41,7 +41,7 @@ class CsvView extends ExcelBaseView
     {
         parent::initialize();
 
-        $this->getResponse()->setTypeMap('csv', ['text/csv; charset=UTF-8']);
+        $this->getResponse()->setTypeMap('csv', [$this->contentType()]);
         $this->setResponse($this->getResponse()->withType('csv'));
     }
 }

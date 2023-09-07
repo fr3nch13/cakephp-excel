@@ -41,7 +41,7 @@ class XlsxView extends ExcelBaseView
     {
         parent::initialize();
 
-        $this->getResponse()->setTypeMap('xlsx', ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']);
+        $this->getResponse()->setTypeMap('xlsx', [$this->contentType()]);
         $this->setResponse($this->getResponse()->withType('xlsx'));
     }
 }
