@@ -2,25 +2,25 @@
 declare(strict_types=1);
 
 /**
- * PdfView
+ * XlsxView
  */
 
 namespace Fr3nch13\Excel\View;
 
 /**
- * PDF View
+ * Xlsx View
  */
-class PdfView extends ExcelBaseView
+class XlsxView extends ExcelBaseView
 {
     /**
      * @var string The path to look for the layout.
      */
-    protected $layoutPath = 'pdf';
+    protected $layoutPath = 'xlsx';
 
     /**
      * @var string The sub directory to look for the template.
      */
-    protected $subDir = 'pdf';
+    protected $subDir = 'xlsx';
 
     /**
      * Mime-type this view class renders as.
@@ -29,7 +29,7 @@ class PdfView extends ExcelBaseView
      */
     public static function contentType(): string
     {
-        return 'application/pdf';
+        return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     }
 
     /**
@@ -41,10 +41,7 @@ class PdfView extends ExcelBaseView
     {
         parent::initialize();
 
-        $this->setLayoutPath('pdf');
-        $this->setSubDir('pdf');
-
-        $this->getResponse()->setTypeMap('pdf', [$this->contentType()]);
-        $this->setResponse($this->getResponse()->withType('pdf'));
+        $this->getResponse()->setTypeMap('xlsx', [$this->contentType()]);
+        $this->setResponse($this->getResponse()->withType('xlsx'));
     }
 }

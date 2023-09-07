@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Fr3nch13\Excel\Test\TestCase\View\Helper;
 
-use Cake\Http\ServerRequest;
-use Cake\Routing\Router;
 use Fr3nch13\Excel\View\ExcelBaseView;
 
 /**
@@ -24,29 +22,26 @@ class ExcelBaseViewTest extends \Cake\TestSuite\TestCase
     public $View;
 
     /**
-     * Setup the application so that we can run the tests.
-     *
-     * The setup involves initializing a new CakePHP view and using that to
-     * get a copy of the ExcelBaseView.
+     * Setup the View so that we can run the tests.
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        Router::reload();
-        $request = new ServerRequest([
-            'url' => '/pages/home',
-        ]);
-        Router::setRequest($request);
-
-        $this->View = new ExcelBaseView($request);
-
-        static::setAppNamespace();
         $this->loadPlugins(['Fr3nch13/Excel' => []]);
+
+        $viewOptions = [
+            'plugin' => 'Fr3nch13/Excel',
+            'name' => 'Tests',
+            'templatePath' => 'Tests',
+            'template' => 'index',
+        ];
+
+        $this->View = new ExcelBaseView(null, null, null, $viewOptions);
     }
 
     /**
-     * Test that the help is loaded.
+     * Test that the helper is loaded.
      *
      * @return void
      */
@@ -72,14 +67,14 @@ class ExcelBaseViewTest extends \Cake\TestSuite\TestCase
     }
 
     /**
-     * Test The Layour file.
+     * Test The layout.
      *
      * @return void
      */
     public function testLayout(): void
     {
         $this->assertSame(
-            'Fr3nch13/Excel.default',
+            'default',
             $this->View->getLayout()
         );
     }
@@ -91,18 +86,15 @@ class ExcelBaseViewTest extends \Cake\TestSuite\TestCase
      */
     public function testFileNames(): void
     {
-        $this->View->setTemplate('base');
-        $this->View->render();
-
         $filenames = $this->View->getFileNames();
 
-        // These should be using the App's layout and template.
+        // These should be using the App's layout.
         $this->assertSame(
             '/vendor/fr3nch13/cakephp-pta/tests/test_app/templates/layout/default.php',
             str_replace(PLUGIN_ROOT, '', $filenames['layout'])
         );
         $this->assertSame(
-            '/vendor/fr3nch13/cakephp-pta/tests/test_app/templates/base.php',
+            '/templates/Tests/index.php',
             str_replace(PLUGIN_ROOT, '', $filenames['template'])
         );
     }
